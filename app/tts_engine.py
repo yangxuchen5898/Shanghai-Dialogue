@@ -43,14 +43,14 @@ class InterruptibleTTSEngine:
 
         out_file = self.temp_dir / f"tts_{uuid.uuid4().hex}.wav"
         try:
-            import asyncio
-            import edge_tts
-
-            async def _run_tts() -> None:
-                communicate = edge_tts.Communicate(text=text, voice=self.voice)
-                await communicate.save(str(out_file))
-
-            asyncio.run(_run_tts())
+            import pyttsx3
+            # 初始化 pyttsx3 引擎
+            engine = pyttsx3.init()
+            # 设置一些参数，比如语速（默认200太快，调成150）
+            engine.setProperty('rate', 150)
+            engine.save_to_file(text, str(out_file))
+            engine.runAndWait()
+            
             return str(out_file)
         except Exception as e:
             raise RuntimeError(f"TTS 合成失败: {e}")

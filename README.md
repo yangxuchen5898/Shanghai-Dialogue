@@ -29,5 +29,6 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 Copy-Item .env.example .env
+python -c "from modelscope import snapshot_download; snapshot_download('iic/SenseVoiceSmall', local_dir='models/sensevoice')" # 下载 SenseVoice 的模型权重文件
 python main.py
 ```
